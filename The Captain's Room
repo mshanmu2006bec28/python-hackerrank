@@ -1,0 +1,12 @@
+# Read K and the list of room numbers
+k = int(input())
+rooms = list(map(int, input().split()))
+
+# Create a set of unique room numbers
+unique_rooms = set(rooms)
+
+# Mathematical formula to find the unique element
+# (K * sum of unique rooms - sum of all rooms) // (K - 1)
+captain_room = (sum(unique_rooms) * k - sum(rooms)) // (k - 1)
+
+print(captain_room)
