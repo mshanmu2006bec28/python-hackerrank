@@ -1,0 +1,20 @@
+# 1. Read the initial set A
+_ = int(input())
+a = set(map(int, input().split()))
+
+# 2. Read the number of operations
+n = int(input())
+
+for _ in range(n):
+    # Read operation name and set length (length is unused here)
+    operation, _ = input().split()
+    # Read the elements of the second set
+    other_set = set(map(int, input().split()))
+    
+    # 3. Dynamically call the mutation method on set A
+    # getattr(a, operation) gets the method (e.g., a.update)
+    # Then we call it with (other_set)
+    getattr(a, operation)(other_set)
+
+# 4. Print the final sum of elements
+print(sum(a))
