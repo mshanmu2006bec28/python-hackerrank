@@ -1,0 +1,2 @@
+regex_pattern = r"[,.]" # Split on any comma or dot
+
