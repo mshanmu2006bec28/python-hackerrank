@@ -1,0 +1,17 @@
+if __name__ == "__main__":
+    # Read N (rows) and M (columns)
+    n, m = map(int, input().split())
+    
+    # Read the athlete data into a list of lists
+    athletes = [list(map(int, input().split())) for _ in range(n)]
+    
+    # Read the index K to sort by
+    k = int(input())
+    
+    # Sort the list using the Kth element of each row as the key
+    # Python's sort is stable, satisfying the 'original order' requirement
+    sorted_athletes = sorted(athletes, key=lambda x: x[k])
+    
+    # Print the sorted rows
+    for row in sorted_athletes:
+        print(*row)
