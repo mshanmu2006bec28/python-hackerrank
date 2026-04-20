@@ -1,0 +1,21 @@
+# Read the main set A
+a = set(map(int, input().split()))
+
+# Read the number of other sets
+n = int(input())
+
+# Variable to track if set A is a strict superset of all other sets
+result = True
+
+for _ in range(n):
+    # Read each other set
+    other_set = set(map(int, input().split()))
+    
+    # Check if A is a strict superset (A > other_set)
+    # A > other_set checks that A is a superset AND A != other_set
+    if not (a.issuperset(other_set) and len(a) > len(other_set)):
+        result = False
+        break
+
+# Print the final result
+print(result)
