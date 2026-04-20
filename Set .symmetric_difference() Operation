@@ -1,0 +1,14 @@
+# 1. Read input for the English newspaper set
+n = int(input())
+english_subs = set(map(int, input().split()))
+
+# 2. Read input for the French newspaper set
+m = int(input())
+french_subs = set(map(int, input().split()))
+
+# 3. Find the symmetric difference
+# This combines (English - French) and (French - English)
+unique_subs = english_subs.symmetric_difference(french_subs)
+
+# 4. Print the total number of students
+print(len(unique_subs))
