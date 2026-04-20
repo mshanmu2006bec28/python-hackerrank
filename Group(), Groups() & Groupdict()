@@ -1,0 +1,8 @@
+import re
+
+# [a-zA-Z0-0] matches alphanumeric characters
+# ([a-zA-Z0-9]) captures the character in group 1
+# \1 matches the exact same character immediately following it
+m = re.search(r'([a-zA-Z0-9])\1', input())
+
+print(m.group(1) if m else -1)
