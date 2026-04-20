@@ -1,0 +1,13 @@
+# 1. Read input for the English newspaper set
+n = int(input())
+english_subs = set(map(int, input().split()))
+
+# 2. Read input for the French newspaper set
+m = int(input())
+french_subs = set(map(int, input().split()))
+
+# 3. Find the intersection of both sets
+both_subs = english_subs.intersection(french_subs)
+
+# 4. Print the total count (length) of the intersection
+print(len(both_subs))
