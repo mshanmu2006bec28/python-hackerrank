@@ -1,0 +1,10 @@
+import cmath
+
+# Convert input string directly into a complex number
+z = complex(input())
+
+# Use cmath.polar to get both modulus (r) and phase (phi) at once
+r, phi = cmath.polar(z)
+
+print(r)
+print(phi)
