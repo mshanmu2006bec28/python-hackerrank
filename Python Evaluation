@@ -1,0 +1,6 @@
+# Read the entire line as a string
+var = input()
+
+# Evaluate the expression contained in the string
+# In the sample case, eval("print(2 + 3)") will execute the print function
+eval(var)
