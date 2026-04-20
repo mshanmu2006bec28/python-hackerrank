@@ -1,0 +1,13 @@
+# 1. Read input for the English newspaper set
+n = int(input())
+english_subs = set(map(int, input().split()))
+
+# 2. Read input for the French newspaper set
+m = int(input())
+french_subs = set(map(int, input().split()))
+
+# 3. Calculate the difference (English only)
+only_english = english_subs.difference(french_subs)
+
+# 4. Print the count of students
+print(len(only_english))
