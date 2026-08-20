@@ -1,0 +1,29 @@
+#include <string.h>
+
+int binaryGap(int n) {
+    int max_gap = 0;
+    int last_position = -1;
+    int current_position = 0;
+    
+    while (n > 0) {
+        // Check if the current last bit is a 1
+        if (n & 1) {
+            // If we have seen a 1 before, calculate the gap
+            if (last_position != -1) {
+                int gap = current_position - last_position;
+                if (gap > max_gap) {
+                    max_gap = gap;
+                }
+            }
+            // Update the last seen 1 to the current position
+            last_position = current_position;
+        }
+        
+        // Move to the next bit position
+        current_position++;
+        // Shift bits to the right by 1
+        n >>= 1;
+    }
+    
+    return max_gap;
+}
