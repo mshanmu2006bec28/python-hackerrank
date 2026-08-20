@@ -1,0 +1,40 @@
+#include <stdlib.h>
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+// Helper function to build the tree using index boundaries
+struct TreeNode* buildTree(int* nums, int left, int right) {
+    // Base case: if left index passes right index, segment is empty
+    if (left > right) {
+        return NULL;
+    }
+    
+    // Find the index of the maximum value in the current range
+    int maxIndex = left;
+    for (int i = left + 1; i <= right; i++) {
+        if (nums[i] > nums[maxIndex]) {
+            maxIndex = i;
+        }
+    }
+    
+    // Create the root node with the maximum value
+    struct TreeNode* root = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+    root->val = nums[maxIndex];
+    
+    // Recursively build the left and right subtrees
+    root->left = buildTree(nums, left, maxIndex - 1);
+    root->right = buildTree(nums, maxIndex + 1, right);
+    
+    return root;
+}
+
+struct TreeNode* constructMaximumBinaryTree(int* nums, int numsSize) {
+    return buildTree(nums, 0, numsSize - 1);
+}
