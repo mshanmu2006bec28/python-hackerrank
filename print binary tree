@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+// Helper function to find the maximum height of the tree (0-indexed)
+int getHeight(struct TreeNode* root) {
+    if (root == NULL) {
+        return -1; 
+    }
+    int leftH = getHeight(root->left);
+    int rightH = getHeight(root->right);
+    return (leftH > rightH ? leftH : rightH) + 1;
+}
+
+// Helper function to fill the matrix cells with node values
+void fillMatrix(struct TreeNode* root, char*** res, int r, int c, int height) {
+    if (root == NULL) {
+        return;
+    }
+    
+    // Allocate space for the node value string and print into it
+    res[r][c] = (char*)malloc(16 * sizeof(char));
+    sprintf(res[r][c], "%d", root->val);
+    
+    // Calculate column offset for children using bit shifting: 2^(height - r - 1)
+    if (root->left) {
+        int leftCol = c - (1 << (height - r - 1));
+        fillMatrix(root->left, res, r + 1, leftCol, height);
+    }
+    if (root->right) {
+        int rightCol = c + (1 << (height - r - 1));
+        fillMatrix(root->right, res, r + 1, rightCol, height);
+    }
+}
+
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+char*** printTree(struct TreeNode* root, int* returnSize, int** returnColumnSizes) {
+    int height = getHeight(root);
+    
+    // Rows = height + 1
+    int rows = height + 1;
+    // Columns = 2^(height + 1) - 1
+    int cols = (1 << (height + 1)) - 1;
+    
+    *returnSize = rows;
+    *returnColumnSizes = (int*)malloc(rows * sizeof(int));
+    
+    // Allocate the 2D string array matrix
+    char*** res = (char***)malloc(rows * sizeof(char**));
+    for (int i = 0; i < rows; i++) {
+        (*returnColumnSizes)[i] = cols;
+        res[i] = (char**)malloc(cols * sizeof(char*));
+        for (int j = 0; j < cols; j++) {
+            // Default initialization to empty string
+            res[i][j] = (char*)malloc(1 * sizeof(char));
+            res[i][j][0] = '\0';
+        }
+    }
+    
+    // Recursively place values in the matrix starting from the root
+    fillMatrix(root, res, 0, (cols - 1) / 2, height);
+    
+    return res;
+}
