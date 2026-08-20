@@ -1,0 +1,44 @@
+#include <stdlib.h>
+#include <math.h>
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+// Helper function to calculate sum and track total tilt
+int calculateSubtreeSumAndTilt(struct TreeNode* root, int* totalTilt) {
+    // Base case: an empty node has a sum of 0
+    if (root == NULL) {
+        return 0;
+    }
+    
+    // 1. Get the sum of all node values in the left subtree
+    int leftSum = calculateSubtreeSumAndTilt(root->left, totalTilt);
+    
+    // 2. Get the sum of all node values in the right subtree
+    int rightSum = calculateSubtreeSumAndTilt(root->right, totalTilt);
+    
+    // 3. Find the tilt for the current node using absolute difference
+    int currentTilt = abs(leftSum - rightSum);
+    
+    // 4. Add this node's tilt to our total running sum
+    *totalTilt += currentTilt;
+    
+    // 5. Return the total sum of this entire subtree back up to the parent
+    return leftSum + rightSum + root->val;
+}
+
+int findTilt(struct TreeNode* root) {
+    int totalTilt = 0;
+    
+    // Start the recursive process
+    calculateSubtreeSumAndTilt(root, &totalTilt);
+    
+    // Return the final accumulated tilt score
+    return totalTilt;
+}
