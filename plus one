@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* plusOne(int* digits, int digitsSize, int* returnSize) {
+    // Step 1: Traverse the array from right to left
+    for (int i = digitsSize - 1; i >= 0; i--) {
+        if (digits[i] < 9) {
+            digits[i]++;
+            *returnSize = digitsSize;
+            
+            // Allocate memory for the return array as requested
+            int* result = (int*)malloc(digitsSize * sizeof(int));
+            for (int j = 0; j < digitsSize; j++) {
+                result[j] = digits[j];
+            }
+            return result;
+        }
+        // If the digit is 9, it rolls over to 0
+        digits[i] = 0;
+    }
+
+    // Step 2: Handle edge case where all digits were 9 (e.g., 999 -> 1000)
+    *returnSize = digitsSize + 1;
+    int* result = (int*)calloc(*returnSize, sizeof(int));
+    result[0] = 1; // First digit becomes 1, rest are 0 due to calloc
+
+    return result;
+}
